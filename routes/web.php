@@ -17,4 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/registerUser',[UserController::class,'store']);
+// Route::middleware('auth:api')->group(function () {
+//     Route::post('/shop/store', [UserController::class, 'store']);
+// });
+
+Route::get('/debug-auth', function() {
+    echo "hi";
+    return response()->json(['user' => auth()->user(), 'user_id' => auth()->id()]);
+})->middleware('auth');
+
+Route::post('/registerUser',[UserController::class,'store'])->middleware('auth');
